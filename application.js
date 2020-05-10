@@ -3,6 +3,7 @@ $(document).ready(function(){
   var interval;
   var timeLeft = 10;
   var score = 0;
+  var highScore;
 
   var updateTimeLeft = function (amount) {
     timeLeft += amount;
@@ -29,6 +30,17 @@ $(document).ready(function(){
       }, 1000);
     }
   };
+
+  var highScore = function() {
+    if (timeLeft === 0) {
+      clearInterval(interval);
+      interval = undefined;
+    }
+    if (currentScore > highScore) {
+      $('#high-score-value').html(currentScore);
+      highScore = currentScore;
+    }
+  }
 
   var randomNumberGenerator = function (size) {
     return Math.ceil(Math.random() * size);
@@ -65,41 +77,4 @@ $(document).ready(function(){
   });
 
   renderNewQuestion();
-});
-
-$(function() {
-  var currentScore = 0;
-  var highScore = 0;
-
-  $('#high-score-value').append(highScore);
-
-  $('#current-score-value').append(currentScore);
-
-  $('#ref').click(function() {
-    console.log("refresh click");
-    currentScore = 0;
-    $('#current-score-value').html(currentScore);
-    $('#ref').animate({
-      transform: "rotate(-360deg)"
-    }, 500);
-  });
-
-  $('#score-button').click(function() {
-    console.log(highScore);
-    console.log(currentScore);
-    currentScore++;
-
-    $('#current-score-value').html(currentScore);
-    if (currentScore > highScore) {
-      $('#high-score-value').html(currentScore);
-      highScore++;
-    } else {
-      $('#high-score-value').html(highScore);
-    }
-  });
-
-  $('.overlay').animate({
-    width: "200vw",
-    height: "200vw"
-  }, 500);
 });
