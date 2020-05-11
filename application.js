@@ -3,7 +3,7 @@ $(document).ready(function(){
   var interval;
   var timeLeft = 10;
   var score = 0;
-  var highScore;
+  var highScore = 0;
 
   var updateTimeLeft = function (amount) {
     timeLeft += amount;
@@ -24,23 +24,16 @@ $(document).ready(function(){
       interval = setInterval(function () {
         updateTimeLeft(-1);
         if (timeLeft === 0) {
+          if (score > highScore) {
+            $('#high-score-value').html(score);
+            highScore = score;
+          }
           clearInterval(interval);
           interval = undefined;
         }
       }, 1000);
     }
   };
-
-  var highScore = function() {
-    if (timeLeft === 0) {
-      clearInterval(interval);
-      interval = undefined;
-    }
-    if (currentScore > highScore) {
-      $('#high-score-value').html(currentScore);
-      highScore = currentScore;
-    }
-  }
 
   var randomNumberGenerator = function (size) {
     return Math.ceil(Math.random() * size);
